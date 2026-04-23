@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Caveat:wght@400..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #030303;
+    --text-primary: #F5F5F7;
+    --text-secondary: #8E8E93;
+    --accent: #efa339;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --card-bg: #121214;
+    --ease-premium: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    background: var(--bg-base);
+  }
+
+  body {
+    @apply bg-[var(--bg-base)] text-[var(--text-primary)] font-['Inter',sans-serif];
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .premium-blur {
+    @apply backdrop-blur-2xl bg-white/[0.02] border border-white/[0.08];
+  }
+  
+  .glass-card {
+    @apply bg-[#121214] border border-white/[0.08] rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)];
+    transition: all 0.6s var(--ease-premium);
+  }
+
+  .glass-card:hover {
+    @apply border-white/[0.15] shadow-[0_48px_80px_-20px_rgba(0,0,0,0.8)];
+  }
+}
+
+/* Typography Utility Classes */
+.font-heading {
+  font-family: 'Instrument Serif', serif;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-script {
+  font-family: 'Caveat', cursive;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/[0.1] rounded-full hover:bg-white/[0.2] transition-colors;
+}

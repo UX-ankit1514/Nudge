@@ -1,0 +1,459 @@
+PRD — Nudge
+
+A context-aware web app that helps users take one real-world social action instead of scrolling.
+
+
+---
+
+1. Product Overview
+
+
+
+What the product is
+Nudge is a mobile-first web app that helps users handle awkward or hesitant social moments by generating 10 context-specific action cards for a situation they describe. Each card gives a simple real-world move, plus a short explanation of why it works.
+
+Primary goal
+Help users move from hesitation to one real-world action in a social setting, without overthinking.
+
+Target audience
+
+Ages 18–30
+
+Introverted, shy, socially hesitant, or awkward in new situations
+
+Users who browse their phone during idle moments
+
+People who want to connect, approach, or speak up but freeze in the moment
+
+
+---
+
+2. Core Problem
+
+
+
+Exact problem being solved
+Users often know they want to talk, connect, or join a group, but when the moment comes they do not know:
+
+how to start,
+
+how to continue,
+
+when to stay,
+
+when to leave,
+
+or whether their approach is socially appropriate.
+
+Why current alternatives are insufficient
+
+Chat apps / AI assistants give long, generic advice, but users need something fast and situational.
+
+Self-help or habit apps are too abstract and not designed for a real-time social moment.
+
+Static advice content is too passive and does not help the user act immediately.
+
+Nudge is meant to reduce thinking in the moment and turn hesitation into a small action.
+
+
+---
+
+3. Product Vision
+
+
+
+What makes this product different
+Nudge is not a chatbot, not a habit tracker, and not a generic advice tool. It is a behavior-first web app that gives users context-aware social action cards.
+
+Key differentiator / USP
+The app converts a user’s real situation into 10 specific, actionable, emotionally safe cards that help them start, continue, or exit a conversation naturally.
+
+
+---
+
+4. Core Features (Strictly Essential Only)
+
+
+
+Must-have features
+
+1. Hero landing section
+
+
+
+Explains the product clearly
+
+Pushes the user into the experience
+
+2. Context input screen
+
+
+
+Quick chips for common situations
+
+Optional typed input to describe the moment
+
+3. Card generation
+
+
+
+Generate 10 tailored cards for that situation
+
+4. Card deck interaction
+
+
+
+Swipe between cards
+
+Flip cards front/back
+
+5. Front side of card
+
+
+
+One action line
+
+Small tag such as Warm-up / Stretch / Brave
+
+Primary CTA
+
+6. Back side of card
+
+
+
+“Why this works”
+
+“Look for this”
+
+“Remember”
+
+7. Outcome logging
+
+
+
+User marks: I did it / I tried / Not now
+
+8. Session summary
+
+
+
+Shows what happened in the session
+
+9. Dashboard / streak
+
+
+
+Basic progress and return incentive
+
+Essential content model
+
+Cards are not just sentences. They should represent:
+
+a starter line,
+
+a continuation cue,
+
+a safe exit cue,
+
+and a calm explanation.
+
+
+---
+
+5. User Flow
+
+
+6. User lands on the hero section.
+
+
+7. User clicks the primary CTA.
+
+
+8. User reaches the context input screen.
+
+
+9. User selects a chip or types their situation.
+
+
+10. The app generates 10 cards for that specific scenario.
+
+
+11. User swipes through cards.
+
+
+12. User flips a card if they want the explanation.
+
+
+13. User chooses one card to use in real life.
+
+
+14. After the interaction, user returns and logs the outcome.
+
+
+15. App shows feedback and updates streak/progress.
+
+
+
+
+---
+
+6. Screens & Information Architecture
+
+
+7. Hero / Landing
+
+
+
+Purpose:
+Explain the product and drive the user to start.
+
+2. Context Input
+
+
+
+Purpose:
+Let the user describe where they are and what kind of help they need.
+
+3. Generated Card Deck
+
+
+
+Purpose:
+Show 10 situation-specific cards.
+
+4. Card Front
+
+
+
+Purpose:
+Show the action line, tag, and CTA in a clean, readable format.
+
+5. Card Back
+
+
+
+Purpose:
+Show why the card works and what to look for in the real interaction.
+
+6. Outcome / Reflection
+
+
+
+Purpose:
+Let the user log whether they did it, tried, or skipped.
+
+7. Session Summary
+
+
+
+Purpose:
+Show a short end-of-session recap.
+
+8. Dashboard / Progress
+
+
+
+Purpose:
+Show streak and basic progress over time.
+
+
+---
+
+7. UX & Design Principles
+
+
+
+Visual style
+
+Based on the discussion, the product should feel:
+
+premium
+
+minimal
+
+calm
+
+confidence-building
+
+emotionally safe
+
+modern, not playful or childish
+
+Visual direction
+
+Support both dark and light themes
+
+Rounded cards
+
+Soft gradients
+
+Subtle glow / depth
+
+Figtree font
+
+No harsh corners
+
+No loud neon styling
+
+No corporate dashboard feel
+
+Interaction philosophy
+
+One screen should do one job
+
+Reduce cognitive load
+
+Make the user act quickly
+
+Make the user feel safe, not judged
+
+Front side should help the user act
+
+Back side should help the user understand
+
+Swipe reveals more options
+
+Flip reveals context / reasoning
+
+
+---
+
+8. Technical Approach (High-Level Only)
+
+
+
+Frontend approach
+
+Web app, mobile-first
+
+Likely React-based
+
+Smooth card interactions: swipe + flip
+
+Theme support for dark and light mode
+
+Data / storage approach
+
+Minimum viable state can be stored locally
+
+Progress and streak may start with local storage
+
+Cards may be:
+
+template-driven for MVP, or
+
+dynamically generated from the user’s context
+
+
+---
+
+9. Constraints & Non-Goals
+
+
+
+What should NOT be built
+
+Full chatbot experience
+
+Generic advice feed
+
+Habit tracker with long-term task management
+
+Social network or sharing layer
+
+Long onboarding
+
+Notifications
+
+Heavy analytics dashboard
+
+Gamification with coins, points, or fake rewards
+
+Judgmental success/failure language
+
+Features implied earlier but excluded for now
+
+AI personalization engine at scale
+
+Voice assistant
+
+Location-aware suggestions
+
+Social accountability features
+
+Multi-user sharing / community
+
+
+---
+
+10. Risks / Gaps / Ambiguities
+
+
+11. How are the 10 cards generated?
+
+
+
+This is still ambiguous.
+Question: Are the 10 cards AI-generated in real time, or are they template-based for MVP?
+
+2. How persistent must the streak be?
+
+
+
+Question: Is local storage enough for the first version, or do you want user accounts so streaks persist across devices?
+
+3. What is the exact MVP context set?
+
+
+
+The conversation discussed example chips like:
+
+Cafe
+
+Park
+
+Office
+
+Event
+
+Public
+
+Question: Are these the final first-release chips, or should the MVP start with fewer?
+
+4. How much text should the back side contain?
+
+
+
+The final direction suggests a very short explanation, but the exact limit is still open.
+Question: Should back-side copy be kept to 3 small sections maximum, or even less?
+
+5. How much AI behavior should be visible to the user?
+
+
+
+Question: Should the app explicitly say “I generated these for your situation,” or keep the generation logic implicit?
+
+
+---
+
+3 Biggest Assumptions That Need Validation
+
+1. Users will actually use one card in a real-world moment instead of just browsing cards.
+
+
+2. Situation chips + optional typed context are enough to capture what the user needs without a chatbot flow.
+
+
+3. Swipe + flip card interaction feels intuitive and motivating for this use case, not distracting.
+
+
+
+
+---
+
+Crystal-clear summary
+
+Nudge is a mobile-first web app that turns a user’s social hesitation into a small, concrete action. The user describes their situation, gets 10 tailored cards, picks one, acts in real life, and then logs the outcome.
+
+The product is not a chatbot or habit tracker. It is a behavior-guidance system for real social moments.
+
