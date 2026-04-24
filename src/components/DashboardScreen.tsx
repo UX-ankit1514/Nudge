@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Flame, Radar, TrendingUp, Calendar, Zap, ArrowRight, Activity } from 'lucide-react';
+import { CheckCircle2, Flame, Radar, Calendar, Zap, ArrowRight, Activity } from 'lucide-react';
 
 const weekDays = [
   { day: 'M', status: 'done', color: '#3DBDAB' },
@@ -45,7 +45,7 @@ const DashboardScreen: React.FC = () => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeMouseMoveListener?.('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   return (
