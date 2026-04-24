@@ -7,19 +7,14 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ activeItem = 'Home', onNavigate }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMobileMenuOpen]);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { label: 'Home' },
@@ -33,142 +28,115 @@ const Navbar: React.FC<NavbarProps> = ({ activeItem = 'Home', onNavigate }) => {
     setIsMobileMenuOpen(false);
   };
 
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      transition: {
-        staggerChildren: 0.1,
-        staggerDirection: -1,
-      },
-    },
-    open: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    closed: { opacity: 0, y: 20 },
-    open: { opacity: 1, y: 0 },
-  };
-
   return (
-    <>
-      <header className="sticky top-0 md:fixed md:top-0 md:left-0 z-[100] w-full backdrop-blur-[15px] md:backdrop-blur-none bg-[#0a0a0a]/70 md:bg-transparent border-b border-white/5 md:border-none transition-all duration-300">
-        <nav className="max-w-[1440px] mx-auto px-6 py-4 lg:px-24 md:py-8 flex justify-between items-center">
-          {/* Logo Section */}
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#efa339] flex items-center justify-center shadow-[0_0_20px_rgba(239,163,57,0.3)]">
-              <span className="font-heading text-black text-xl md:text-2xl font-bold italic">N</span>
-            </div>
-            <span className="font-heading text-white text-xl md:text-2xl tracking-tighter">
-              Nudge <span className="text-[#efa339] font-light">2.0</span>
-            </span>
+    <header 
+      className={`fixed top-0 left-0 z-[100] w-full transition-all duration-500 ${
+        isScrolled ? 'py-4' : 'py-8'
+      }`}
+    >
+      <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-6">
+        {/* Restored Orange Logo */}
+        <div 
+          className="group flex cursor-pointer items-center gap-3"
+          onClick={() => handleNavigate('Home')}
+        >
+          <div className="relative h-10 w-10 overflow-hidden rounded-full bg-[#efa339] text-black transition-transform duration-500 group-hover:scale-110 flex items-center justify-center">
+            <span className="font-heading text-2xl font-bold italic">N</span>
+            <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-500 group-hover:opacity-20" />
           </div>
+          <span className="font-heading text-2xl tracking-tighter text-white">
+            Nudge <span className="italic text-[#efa339]">2.0</span>
+          </span>
+        </div>
 
-          {/* Navigation Items (Desktop) */}
-          <div className="hidden md:flex gap-2 p-1 bg-white/[0.02] border border-white/[0.05] rounded-full backdrop-blur-2xl">
-            {navItems.map((item) => (
-              <button
-                type="button"
-                key={item.label} 
-                onClick={() => handleNavigate(item.label)}
-                className={`px-6 py-2.5 rounded-full cursor-pointer transition-all duration-500 ${
-                  activeItem === item.label 
-                  ? 'bg-white/[0.08] text-white shadow-[0_4px_12px_rgba(0,0,0,0.1)]' 
-                  : 'text-white/40 hover:text-white/80 hover:bg-white/[0.04]'
-                }`}
-              >
-                <span className="text-[13px] font-body font-medium tracking-premium">
-                  {item.label}
-                </span>
-                {activeItem === item.label && (
-                   <motion.div layoutId="nav-underline" className="h-1 bg-[#efa339] rounded-full mt-1 w-1/2 mx-auto" />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Action Button & Mobile Menu Toggle */}
-          <div className="flex items-center gap-3 md:gap-4">
+        {/* Minimalist Desktop Nav */}
+        <div className="hidden items-center gap-1 rounded-full border border-white/[0.05] bg-white/[0.02] p-1 backdrop-blur-md md:flex">
+          {navItems.map((item) => (
             <button
-              type="button"
-              onClick={() => handleNavigate('Start')}
-              className="px-4 py-2 md:px-6 md:py-2.5 bg-white/[0.05] border border-white/[0.1] rounded-full text-white text-[12px] md:text-[13px] font-body font-medium hover:bg-white/[0.1] transition-all duration-500"
+              key={item.label}
+              onClick={() => handleNavigate(item.label)}
+              className={`relative px-6 py-2 text-[11px] font-bold uppercase tracking-[2px] transition-colors duration-500 ${
+                activeItem === item.label ? 'text-white' : 'text-white/30 hover:text-white/60'
+              }`}
             >
-              Get Started
+              <span className="relative z-10">{item.label}</span>
+              {activeItem === item.label && (
+                <motion.div
+                  layoutId="nav-pill"
+                  className="absolute inset-0 rounded-full bg-white/[0.08]"
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                />
+              )}
             </button>
-            
-            {/* Minimalist 2-line Hamburger Icon for Mobile */}
-            <button 
-              className="md:hidden relative z-[110] w-8 h-8 flex flex-col justify-center items-end gap-1.5 focus:outline-none group"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <motion.span 
-                animate={isMobileMenuOpen ? { rotate: 45, y: 4, width: '100%' } : { rotate: 0, y: 0, width: '100%' }}
-                className="h-[1.5px] bg-white rounded-full transition-all duration-300"
-              />
-              <motion.span 
-                animate={isMobileMenuOpen ? { rotate: -45, y: -4, width: '100%' } : { rotate: 0, y: 0, width: '60%' }}
-                className="h-[1.5px] bg-white rounded-full transition-all duration-300"
-              />
-            </button>
-          </div>
-        </nav>
-      </header>
+          ))}
+        </div>
 
-      {/* Full-screen Mobile Menu Overlay */}
+        {/* Restored Orange Get Started Button */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => handleNavigate('Start')}
+            className="group relative hidden overflow-hidden rounded-full bg-[#efa339] px-8 py-2.5 text-[11px] font-bold uppercase tracking-[2px] text-black transition-all duration-500 hover:shadow-[0_0_20px_rgba(239,163,57,0.3)] md:block"
+          >
+            <span className="relative z-10">Get Started</span>
+            <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-500 group-hover:opacity-20" />
+          </button>
+
+          {/* Mobile Toggle */}
+          <button 
+            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full border border-white/10 md:hidden bg-white/5"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <motion.span 
+              animate={isMobileMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+              className="h-[1px] w-5 bg-white"
+            />
+            <motion.span 
+              animate={isMobileMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
+              className="h-[1px] w-5 bg-white"
+            />
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] bg-[#0a0a0a]/95 backdrop-blur-[30px] flex items-center justify-center md:hidden"
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-black/95 backdrop-blur-2xl md:hidden"
           >
-            <motion.div 
-              variants={menuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="flex flex-col items-center gap-8"
-            >
-              {navItems.map((item) => (
-                <motion.div
+            <div className="flex flex-col items-center gap-8">
+              {navItems.map((item, i) => (
+                <motion.button
                   key={item.label}
-                  variants={itemVariants}
-                  className="cursor-pointer group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
                   onClick={() => handleNavigate(item.label)}
+                  className={`font-heading text-6xl transition-colors ${
+                    activeItem === item.label ? 'text-[#efa339]' : 'text-white/50 hover:text-white'
+                  }`}
                 >
-                  <span className={`font-heading text-5xl tracking-[-0.02em] transition-colors duration-300 ${
-                    activeItem === item.label ? 'text-[#efa339]' : 'text-white/50 group-hover:text-white'
-                  }`}>
-                    {item.label}
-                  </span>
-                </motion.div>
+                  {item.label}
+                </motion.button>
               ))}
               
-              <motion.div 
-                variants={itemVariants}
-                className="mt-8"
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                onClick={() => handleNavigate('Start')}
+                className="mt-8 px-10 py-4 bg-[#efa339] text-black font-body font-bold rounded-full text-lg tracking-tight"
               >
-                <button
-                  type="button"
-                  onClick={() => handleNavigate('Start')}
-                  className="px-10 py-4 bg-[#efa339] text-black font-body font-semibold rounded-full text-lg tracking-tight shadow-[0_20px_40px_rgba(239,163,57,0.15)]"
-                >
-                  Get Started
-                </button>
-              </motion.div>
-            </motion.div>
+                Get Started
+              </motion.button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 };
 
