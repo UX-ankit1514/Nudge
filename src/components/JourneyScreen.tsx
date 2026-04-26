@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, ArrowUp, Sparkles, RefreshCcw } from 'lucide-react';
+import { Mic, ArrowUp, Sparkles, RefreshCcw, ArrowLeft } from 'lucide-react';
 import SwipeableStack from './SwipeableStack';
 import OutcomeFeedbackScreen from './OutcomeFeedbackScreen';
 import { CARDS, CardData } from '../data/cards';
@@ -40,7 +40,7 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#030303] flex flex-col items-center justify-start px-6 pt-32 sm:pt-36 lg:pt-40 pb-16">
+    <div className={`relative min-h-screen w-full overflow-hidden bg-[#030303] flex flex-col items-center justify-start px-6 pb-16 ${showDeck && !selectedCard ? 'pt-[164px]' : 'pt-32 sm:pt-36 lg:pt-40'}`}>
       {/* 1. Global Background (Consistent with Hero) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Technical Grid lines */}
@@ -54,10 +54,6 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
 
         {/* Sophisticated Gradient Mesh */}
         <div className="absolute inset-0 overflow-hidden">
-          <div
-            className="absolute top-[-10%] right-[-10%] w-[70%] h-[70%] rounded-full blur-[140px] opacity-[0.1]"
-            style={{ background: 'radial-gradient(circle, #efa339 0%, transparent 70%)' }}
-          />
           <div
             className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full blur-[120px] opacity-[0.06]"
             style={{ background: 'radial-gradient(circle, #7c3aed 0%, transparent 70%)' }}
@@ -183,26 +179,28 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.8, ease: [0.2, 0, 0, 1] }}
-              className="w-full flex flex-col items-center"
+              className="w-full flex flex-col items-center relative"
             >
-              <div className="text-center mb-12">
-                 <h2 className="font-heading text-4xl text-white mb-3 italic">Your custom deck is ready</h2>
-                 <p className="font-body text-white/40 text-sm tracking-premium uppercase">Optimized for your scenario</p>
-              </div>
-
-              <SwipeableStack 
-                cards={CARDS} 
-                onEnd={() => setShowDeck(false)} 
-                onTryCard={setSelectedCard}
-              />
-
+              {/* Back Navigation */}
               <button 
                 onClick={() => setShowDeck(false)}
-                className="mt-20 flex items-center gap-2 text-white/30 hover:text-[#efa339] transition-all font-body text-xs tracking-widest uppercase py-3 px-6 rounded-full border border-white/5 hover:border-[#efa339]/20"
+                className="absolute left-0 top-0 sm:left-4 p-2 text-white/40 hover:text-white transition-colors z-50 flex items-center justify-center rounded-full hover:bg-white/5"
+                aria-label="Back to scenario"
               >
-                <RefreshCcw size={14} />
-                New Scenario
+                <ArrowLeft size={24} />
               </button>
+
+              <div className="flex flex-col items-center justify-center w-full">
+                <div className="text-center mb-[40px] relative z-10 pointer-events-none">
+                   <h2 className="font-heading text-3xl sm:text-4xl text-white mb-2 italic">Your custom deck is ready</h2>
+                   <p className="font-body text-white/40 text-xs tracking-premium uppercase">Optimized for your scenario</p>
+                </div>
+
+                <SwipeableStack 
+                  cards={CARDS} 
+                  onTryCard={setSelectedCard}
+                />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -212,3 +210,4 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
 };
 
 export default JourneyScreen;
+

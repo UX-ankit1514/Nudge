@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Clock3, RefreshCcw, TrendingUp } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock3, RefreshCcw, TrendingUp, Flame, Check } from 'lucide-react';
 import { CardData } from '../data/cards';
 
 type FeedbackId = 'did-it' | 'tried-it' | 'not-now';
+type Feeling = 'Nervous' | 'Good' | 'Hard' | 'Easy';
 
 interface OutcomeFeedbackScreenProps {
   card: CardData;
@@ -46,38 +47,42 @@ const resultScreens: Record<FeedbackId, {
   accent: string;
   panel: string;
   solidButton: string;
+  xp: number;
+  barColor: string;
 }> = {
   'did-it': {
     badge: 'DID IT',
     headline: 'You actually did it\nThat takes real courage',
     meta: '1 action added',
-    accent: '#0F573E',
+    accent: '#3DBDAB', 
     panel: 'rgba(62, 189, 171, 0.12)',
     solidButton: '#0F573E',
+    xp: 10,
+    barColor: '#0F573E',
   },
   'tried-it': {
     badge: 'TRIED IT',
     headline: 'You showed up. That matters\nThis is how it gets easier.',
     meta: '1 attempt added',
-    accent: '#38328C',
+    accent: '#9B8FF5', 
     panel: 'rgba(139, 127, 240, 0.12)',
     solidButton: '#38328C',
+    xp: 5,
+    barColor: '#38328C',
   },
   'not-now': {
     badge: 'NOT NOW',
     headline: "That's okay. Timing matters\nYou'll find the right moment",
     meta: 'You paused this one',
-    accent: 'rgba(255, 255, 255, 0.2)',
+    accent: '#4D4D4F', 
     panel: 'rgba(255, 255, 255, 0.05)',
     solidButton: 'rgba(255, 255, 255, 0.2)',
+    xp: 1,
+    barColor: 'rgba(255, 255, 255, 0.2)',
   },
 };
 
-const cardTypeLabels: Record<CardData['type'], string> = {
-  'warm-up': 'Warm-up',
-  stretch: 'Stretch',
-  brave: 'Brave',
-};
+const feelings: Feeling[] = ['Nervous', 'Good', 'Hard', 'Easy'];
 
 const OutcomeFeedbackScreen: React.FC<OutcomeFeedbackScreenProps> = ({
   card,
@@ -86,6 +91,8 @@ const OutcomeFeedbackScreen: React.FC<OutcomeFeedbackScreenProps> = ({
   onNewScenario,
 }) => {
   const [selectedFeedback, setSelectedFeedback] = useState<FeedbackId | null>(null);
+  const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
+  const [experienceText, setExperienceText] = useState('');
 
   if (selectedFeedback) {
     const result = resultScreens[selectedFeedback];
@@ -97,67 +104,132 @@ const OutcomeFeedbackScreen: React.FC<OutcomeFeedbackScreenProps> = ({
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         exit={{ opacity: 0, y: -18, filter: 'blur(10px)' }}
         transition={{ duration: 0.7, ease: [0.2, 0, 0, 1] }}
-        className="flex min-h-[calc(100vh-13rem)] w-full items-center justify-center px-0 py-8 sm:min-h-[calc(100vh-14rem)]"
+        className="flex min-h-[calc(100vh-13rem)] w-full items-center justify-center px-0 py-8"
       >
         <div
-          className="relative w-full max-w-[540px] overflow-hidden rounded-[32px] border border-white/[0.09] bg-[rgba(18,18,20,0.82)] p-6 shadow-[0_32px_64px_-24px_rgba(0,0,0,0.9)] backdrop-blur-[60px] sm:p-8"
+          className="relative w-full max-w-[436px] min-h-[509px] overflow-hidden rounded-[16px] border border-white/[0.07] p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] backdrop-blur-[60px]"
           style={{
             background: `radial-gradient(circle at 88% 12%, ${result.panel} 0%, transparent 40%), rgba(18,18,20,0.82)`,
           }}
         >
-          <div className="pointer-events-none absolute inset-0 rounded-[32px] ring-1 ring-inset ring-white/[0.04]" />
-          <div
-            className="pointer-events-none absolute -left-20 top-10 h-48 w-48 rounded-full opacity-30 blur-[70px]"
-            style={{ background: result.accent }}
-          />
+          {/* Header Row */}
+          <div className="flex items-center justify-between">
+            <div
+              className="inline-flex h-[27px] items-center justify-center rounded-[6px] px-3 font-premium text-[13px] font-normal capitalize leading-none text-[#F0EDE6]"
+              style={{ background: result.solidButton }}
+            >
+              <div className="flex items-center gap-1.5">
+                 <div className="w-1 h-1 rounded-full bg-white" />
+                 {result.badge}
+              </div>
+            </div>
 
-          <div className="relative z-10">
-          <div
-            className="inline-flex h-7 items-center justify-center rounded-full border px-3.5 font-body text-[10px] font-semibold uppercase leading-none tracking-[1.7px] text-white/80"
-            style={{ background: result.panel, borderColor: result.accent }}
-          >
-            {result.badge}
+            <div className="flex items-center gap-1">
+              <div className="w-[25px] h-[25px] flex items-center justify-center overflow-hidden">
+                {/* XP Coin Icon */}
+                <img 
+                  src="https://www.figma.com/api/mcp/asset/505674f3-00c6-4836-abf5-0a1b83c2e8c2" 
+                  alt="XP Coin" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <span className="font-premium text-[15px] font-medium text-[#F0EDE6]">
+                +{result.xp} XP
+              </span>
+            </div>
           </div>
 
-          <div className="mt-12 flex items-start gap-4">
+          {/* Headline Section */}
+          <div className="mt-[47px] flex items-start gap-[10px]">
             <div
-              className="mt-1 h-[72px] w-px shrink-0 rounded-full"
-              style={{ background: result.accent }}
+              className="h-[57px] w-1 shrink-0 rounded-[10px]"
+              style={{ background: result.barColor }}
             />
-            <h1 className="whitespace-pre-line font-heading text-[32px] font-normal leading-[0.98] tracking-tight text-white sm:text-[40px]">
+            <h1 className="font-premium text-[24px] sm:text-[28px] font-bold leading-[30px] sm:leading-[34px] text-[#F0EDE6] whitespace-pre-line">
               {result.headline}
             </h1>
           </div>
 
-          <div className="mt-5 flex items-center gap-2.5 pl-5">
-            <div
-              className="h-1.5 w-1.5 shrink-0 rounded-full shadow-[0_0_18px_currentColor]"
-              style={{ background: result.accent }}
-            />
-            <p className="font-body text-sm italic leading-5 tracking-premium text-white/45">
-              {result.meta}
-            </p>
+          {/* Gamification Stats */}
+          <div className="mt-[18px] space-y-[7px]">
+            <div className="flex items-center gap-[10px]">
+              <div className="flex h-5 w-5 items-center justify-center">
+                <Flame size={18} className="text-[#EB5757]" fill="#EB5757" />
+              </div>
+              <p className="font-premium text-[16px] italic font-normal text-[#F0EDE6]/60">
+                4 day streak alive
+              </p>
+            </div>
+            <div className="flex items-center gap-[10px]">
+              <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#2F88FF] border border-white">
+                <Check size={12} className="text-white" strokeWidth={3} />
+              </div>
+              <p className="font-premium text-[16px] italic font-normal text-[#F0EDE6]/60">
+                {result.meta}
+              </p>
+            </div>
           </div>
 
-          <div className="mt-10 grid gap-3 sm:grid-cols-2">
+          {/* Feedback Interaction Section */}
+          <div className="mt-[20px] space-y-[5px]">
+            <div>
+              <p className="font-premium text-[18px] font-medium text-[#F0EDE6]">How did it feel</p>
+              <div className="mt-[12px] flex items-center gap-2 sm:gap-[12px] overflow-x-auto pb-1 no-scrollbar">
+                {feelings.map(feeling => (
+                  <button
+                    key={feeling}
+                    onClick={() => setSelectedFeeling(feeling)}
+                    className={`h-[27px] min-w-[75px] sm:w-[89px] shrink-0 rounded-[8px] border font-premium text-[12px] transition-all duration-300 ${
+                      selectedFeeling === feeling
+                        ? 'text-white border-white/20'
+                        : 'bg-white/90 border-[#151515] text-[#192829] hover:bg-white'
+                    }`}
+                    style={{ 
+                      background: selectedFeeling === feeling ? result.solidButton : undefined 
+                    }}
+                  >
+                    {feeling}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <p className="font-premium text-[18px] font-medium text-[#F0EDE6]">Share your experience</p>
+              <div className="mt-[12px] relative overflow-hidden rounded-[7px] border border-[#151515] bg-white w-full">
+                <textarea
+                  value={experienceText}
+                  onChange={(e) => setExperienceText(e.target.value)}
+                  placeholder="I got really ....."
+                  className="w-full h-[67px] bg-transparent p-3 font-premium text-[12px] font-medium text-[#192829] placeholder:text-[#192829]/50 focus:outline-none resize-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Final Actions */}
+          <div className="mt-[21px] grid grid-cols-2 gap-3 sm:gap-[16px]">
             <button
               type="button"
               onClick={onGoToDashboard}
-              className="flex h-12 items-center justify-center gap-2 rounded-full px-5 font-body text-sm font-semibold leading-none tracking-tight text-white shadow-[0_18px_36px_rgba(0,0,0,0.22)] transition-all duration-500 hover:-translate-y-0.5 active:scale-[0.98]"
+              className="flex h-[42px] items-center justify-center gap-1 sm:gap-2.5 rounded-[10px] px-2 font-premium text-[12px] sm:text-[14px] font-normal capitalize leading-none text-[#F0EDE6] transition-all duration-500 hover:brightness-110 active:scale-[0.98]"
               style={{ background: result.solidButton }}
             >
-              <span className="min-w-0 text-center">Go to dashboard</span>
-              <ArrowRight size={16} strokeWidth={2} className="shrink-0 text-white" />
+              <span className="flex-1 text-left whitespace-nowrap overflow-hidden text-ellipsis">Go to dashboard</span>
+              <ArrowRight size={16} className="shrink-0 text-white" />
             </button>
             <button
               type="button"
-              onClick={onBackToDeck}
-              className="flex h-12 items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.035] px-5 font-body text-sm font-medium leading-none tracking-tight text-white/72 transition-all duration-500 hover:-translate-y-0.5 hover:border-white/[0.18] hover:bg-white/[0.065] hover:text-white active:scale-[0.98]"
+              onClick={() => {
+                setSelectedFeedback(null);
+                onBackToDeck();
+              }}
+              className="flex h-[42px] items-center justify-center gap-1 sm:gap-2.5 rounded-[10px] px-2 font-premium text-[12px] sm:text-[14px] font-normal capitalize leading-none text-[#F0EDE6] transition-all duration-500 hover:brightness-110 active:scale-[0.98]"
+              style={{ background: result.solidButton }}
             >
-              <span className="min-w-0 text-center">Try another</span>
-              <ArrowRight size={16} strokeWidth={2} className="shrink-0 text-white/70" />
+              <span className="flex-1 text-left whitespace-nowrap overflow-hidden text-ellipsis">Try another</span>
+              <ArrowRight size={16} className="shrink-0 text-white" />
             </button>
-          </div>
           </div>
         </div>
       </motion.section>
@@ -209,7 +281,7 @@ const OutcomeFeedbackScreen: React.FC<OutcomeFeedbackScreenProps> = ({
             </p>
             <div className="mt-4 flex flex-col gap-3">
               <h2 className="font-heading text-3xl text-white leading-none tracking-tight">
-                {cardTypeLabels[card.type]}
+                Warm-up
               </h2>
               <p className="font-script text-[30px] leading-[1.05] text-white">
                 "{card.front.hook}"

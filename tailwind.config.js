@@ -11,6 +11,7 @@ export default {
         body: ['Inter', 'sans-serif'],
         ui: ['Inter', 'sans-serif'],
         script: ['Caveat', 'cursive'],
+        premium: ['Figtree', 'sans-serif'],
       },
       letterSpacing: {
         premium: '-0.02em',

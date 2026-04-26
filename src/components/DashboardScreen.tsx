@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Flame, Radar, Calendar, Zap, ArrowRight, Activity } from 'lucide-react';
 
@@ -38,23 +38,26 @@ const DashboardPanel: React.FC<React.PropsWithChildren<{ className?: string; del
 );
 
 const DashboardScreen: React.FC = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      if (!containerRef.current) return;
+      const { clientX, clientY } = e;
+      containerRef.current.style.setProperty('--mouse-x', `${clientX}px`);
+      containerRef.current.style.setProperty('--mouse-y', `${clientY}px`);
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#030303]">
+    <div ref={containerRef} className="relative min-h-screen w-full overflow-hidden bg-[#030303]">
       {/* RESTORED EXACT BACKGROUND FROM HERO/START */}
       <div
         className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000"
         style={{
-          background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(239, 163, 57, 0.05), transparent 80%)`
+          background: `radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(239, 163, 57, 0.05), transparent 80%)`
         }}
       />
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
