@@ -107,129 +107,150 @@ const OutcomeFeedbackScreen: React.FC<OutcomeFeedbackScreenProps> = ({
         className="flex min-h-[calc(100vh-13rem)] w-full items-center justify-center px-0 py-8"
       >
         <div
-          className="relative w-full max-w-[436px] min-h-[509px] overflow-hidden rounded-[16px] border border-white/[0.07] p-5 sm:p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] backdrop-blur-[60px]"
-          style={{
-            background: `radial-gradient(circle at 88% 12%, ${result.panel} 0%, transparent 40%), rgba(18,18,20,0.82)`,
-          }}
+          className="relative w-full max-w-[480px] overflow-hidden rounded-[32px] border border-white/[0.08] p-8 sm:p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] backdrop-blur-[60px] bg-[rgba(18,18,20,0.86)]"
         >
-          {/* Header Row */}
-          <div className="flex items-center justify-between">
-            <div
-              className="inline-flex h-[27px] items-center justify-center rounded-[6px] px-3 font-premium text-[13px] font-normal capitalize leading-none text-[#F0EDE6]"
-              style={{ background: result.solidButton }}
-            >
-              <div className="flex items-center gap-1.5">
-                 <div className="w-1 h-1 rounded-full bg-white" />
-                 {result.badge}
+          {/* Ambient Glow */}
+          <div
+            className="absolute inset-0 opacity-[0.25] pointer-events-none"
+            style={{
+              background: `radial-gradient(circle at 85% 15%, ${result.panel} 0%, transparent 60%)`,
+            }}
+          />
+          
+          <div className="relative z-10">
+            {/* Header Row */}
+            <div className="flex items-center justify-between">
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border backdrop-blur-md"
+                style={{ 
+                  background: result.panel,
+                  borderColor: 'rgba(255,255,255,0.05)'
+                }}
+              >
+                <div className="w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.5)]" style={{ background: result.accent }} />
+                <span className="font-body text-[10px] font-bold uppercase tracking-[1.5px] text-white/90">
+                  {result.badge}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1.5 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/5">
+                <div className="w-[18px] h-[18px] flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="https://www.figma.com/api/mcp/asset/505674f3-00c6-4836-abf5-0a1b83c2e8c2" 
+                    alt="XP Coin" 
+                    className="w-full h-full object-cover drop-shadow-md"
+                  />
+                </div>
+                <span className="font-body text-[12px] font-bold text-[#efa339]">
+                  +{result.xp} XP
+                </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-1">
-              <div className="w-[25px] h-[25px] flex items-center justify-center overflow-hidden">
-                {/* XP Coin Icon */}
-                <img 
-                  src="https://www.figma.com/api/mcp/asset/505674f3-00c6-4836-abf5-0a1b83c2e8c2" 
-                  alt="XP Coin" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="font-premium text-[15px] font-medium text-[#F0EDE6]">
-                +{result.xp} XP
-              </span>
+            {/* Headline Section */}
+            <div className="mt-8">
+              <h1 className="font-heading text-4xl sm:text-5xl text-white leading-[1.05] tracking-tight whitespace-pre-line">
+                {result.headline}
+              </h1>
             </div>
-          </div>
 
-          {/* Headline Section */}
-          <div className="mt-[47px] flex items-start gap-[10px]">
-            <div
-              className="h-[57px] w-1 shrink-0 rounded-[10px]"
-              style={{ background: result.barColor }}
-            />
-            <h1 className="font-premium text-[24px] sm:text-[28px] font-bold leading-[30px] sm:leading-[34px] text-[#F0EDE6] whitespace-pre-line">
-              {result.headline}
-            </h1>
-          </div>
-
-          {/* Gamification Stats */}
-          <div className="mt-[18px] space-y-[7px]">
-            <div className="flex items-center gap-[10px]">
-              <div className="flex h-5 w-5 items-center justify-center">
-                <Flame size={18} className="text-[#EB5757]" fill="#EB5757" />
+            {/* Gamification Stats */}
+            <div className="mt-6 flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.03] border border-white/10 shadow-inner">
+                  <Flame size={15} className="text-[#efa339]" />
+                </div>
+                <p className="font-body text-[14px] text-white/60 tracking-premium">
+                  4 day streak alive
+                </p>
               </div>
-              <p className="font-premium text-[16px] italic font-normal text-[#F0EDE6]/60">
-                4 day streak alive
-              </p>
-            </div>
-            <div className="flex items-center gap-[10px]">
-              <div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#2F88FF] border border-white">
-                <Check size={12} className="text-white" strokeWidth={3} />
-              </div>
-              <p className="font-premium text-[16px] italic font-normal text-[#F0EDE6]/60">
-                {result.meta}
-              </p>
-            </div>
-          </div>
-
-          {/* Feedback Interaction Section */}
-          <div className="mt-[20px] space-y-[5px]">
-            <div>
-              <p className="font-premium text-[18px] font-medium text-[#F0EDE6]">How did it feel</p>
-              <div className="mt-[12px] flex items-center gap-2 sm:gap-[12px] overflow-x-auto pb-1 no-scrollbar">
-                {feelings.map(feeling => (
-                  <button
-                    key={feeling}
-                    onClick={() => setSelectedFeeling(feeling)}
-                    className={`h-[27px] min-w-[75px] sm:w-[89px] shrink-0 rounded-[8px] border font-premium text-[12px] transition-all duration-300 ${
-                      selectedFeeling === feeling
-                        ? 'text-white border-white/20'
-                        : 'bg-white/90 border-[#151515] text-[#192829] hover:bg-white'
-                    }`}
-                    style={{ 
-                      background: selectedFeeling === feeling ? result.solidButton : undefined 
-                    }}
-                  >
-                    {feeling}
-                  </button>
-                ))}
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.03] border border-white/10 shadow-inner">
+                  <Check size={15} className="text-white/80" />
+                </div>
+                <p className="font-body text-[14px] text-white/60 tracking-premium">
+                  {result.meta}
+                </p>
               </div>
             </div>
 
-            <div className="pt-2">
-              <p className="font-premium text-[18px] font-medium text-[#F0EDE6]">Share your experience</p>
-              <div className="mt-[12px] relative overflow-hidden rounded-[7px] border border-[#151515] bg-white w-full">
-                <textarea
-                  value={experienceText}
-                  onChange={(e) => setExperienceText(e.target.value)}
-                  placeholder="I got really ....."
-                  className="w-full h-[67px] bg-transparent p-3 font-premium text-[12px] font-medium text-[#192829] placeholder:text-[#192829]/50 focus:outline-none resize-none"
-                />
+            {/* divider */}
+            <div className="w-full h-[1px] bg-white/5 my-8" />
+
+            {/* Feedback Interaction Section */}
+            <div className="space-y-8">
+              <div>
+                <p className="font-body text-[11px] uppercase tracking-[2px] font-semibold text-white/40 mb-4">How did it feel?</p>
+                <div className="flex flex-wrap gap-2.5">
+                  {feelings.map(feeling => {
+                    const isSelected = selectedFeeling === feeling;
+                    return (
+                      <button
+                        key={feeling}
+                        onClick={() => setSelectedFeeling(feeling)}
+                        className={`px-5 py-2.5 rounded-full border font-body text-[13px] font-medium transition-all duration-300 ${
+                          isSelected
+                            ? 'text-white shadow-[0_0_20px_rgba(255,255,255,0.1)]'
+                            : 'bg-white/[0.02] border-white/10 text-white/50 hover:bg-white/[0.06] hover:text-white hover:border-white/20'
+                        }`}
+                        style={{ 
+                          background: isSelected ? (selectedFeedback === 'not-now' ? '#333' : result.solidButton) : undefined,
+                          borderColor: isSelected ? result.accent : undefined
+                        }}
+                      >
+                        {feeling}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-body text-[11px] uppercase tracking-[2px] font-semibold text-white/40 mb-4">Share your experience</p>
+                <div className="relative group">
+                  <div 
+                    className="absolute -inset-0.5 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" 
+                    style={{ background: `linear-gradient(to right, ${selectedFeedback === 'not-now' ? '#444' : result.solidButton}, transparent)` }} 
+                  />
+                  <textarea
+                    value={experienceText}
+                    onChange={(e) => setExperienceText(e.target.value)}
+                    placeholder="What did you learn? How did they react?"
+                    className="relative w-full h-[100px] bg-[rgba(18,18,20,0.9)] border border-white/10 rounded-xl p-4 font-body text-[14px] text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-all resize-none backdrop-blur-xl shadow-inner"
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Final Actions */}
-          <div className="mt-[21px] grid grid-cols-2 gap-3 sm:gap-[16px]">
-            <button
-              type="button"
-              onClick={onGoToDashboard}
-              className="flex h-[42px] items-center justify-center gap-1 sm:gap-2.5 rounded-[10px] px-2 font-premium text-[12px] sm:text-[14px] font-normal capitalize leading-none text-[#F0EDE6] transition-all duration-500 hover:brightness-110 active:scale-[0.98]"
-              style={{ background: result.solidButton }}
-            >
-              <span className="flex-1 text-left whitespace-nowrap overflow-hidden text-ellipsis">Go to dashboard</span>
-              <ArrowRight size={16} className="shrink-0 text-white" />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedFeedback(null);
-                onBackToDeck();
-              }}
-              className="flex h-[42px] items-center justify-center gap-1 sm:gap-2.5 rounded-[10px] px-2 font-premium text-[12px] sm:text-[14px] font-normal capitalize leading-none text-[#F0EDE6] transition-all duration-500 hover:brightness-110 active:scale-[0.98]"
-              style={{ background: result.solidButton }}
-            >
-              <span className="flex-1 text-left whitespace-nowrap overflow-hidden text-ellipsis">Try another</span>
-              <ArrowRight size={16} className="shrink-0 text-white" />
-            </button>
+            {/* Final Actions */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+              <button
+                type="button"
+                onClick={onGoToDashboard}
+                className="flex-1 h-[54px] rounded-full flex items-center justify-center gap-2 font-body text-[14px] font-semibold text-white shadow-lg transition-all duration-500 hover:-translate-y-0.5 active:scale-[0.98]"
+                style={{ 
+                  background: selectedFeedback === 'not-now' ? '#333' : `linear-gradient(135deg, ${result.solidButton}, ${result.accent})`,
+                  boxShadow: selectedFeedback === 'not-now' ? 'none' : `0 10px 30px -10px ${result.accent}`
+                }}
+              >
+                <span>Go to dashboard</span>
+                <ArrowRight size={18} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedFeedback(null);
+                  setExperienceText('');
+                  setSelectedFeeling(null);
+                  onBackToDeck();
+                }}
+                className="flex-1 h-[54px] rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center gap-2 font-body text-[14px] font-medium text-white/70 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:text-white hover:-translate-y-0.5 active:scale-[0.98]"
+              >
+                <RefreshCcw size={16} />
+                <span>Try another</span>
+              </button>
+            </div>
           </div>
         </div>
       </motion.section>

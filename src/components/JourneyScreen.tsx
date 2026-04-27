@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, ArrowUp, Sparkles, RefreshCcw, ArrowLeft } from 'lucide-react';
+import { Mic, ArrowUp, Sparkles, ArrowLeft } from 'lucide-react';
 import SwipeableStack from './SwipeableStack';
 import OutcomeFeedbackScreen from './OutcomeFeedbackScreen';
 import { CARDS, CardData } from '../data/cards';
@@ -12,7 +12,6 @@ interface JourneyScreenProps {
 const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
   const [scenario, setScenario] = useState('');
   const [showDeck, setShowDeck] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null);
 
   const categories = [
@@ -25,13 +24,8 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
 
   const handleGenerate = () => {
     if (!scenario.trim()) return;
-    setIsGenerating(true);
     setSelectedCard(null);
-    // Simulate generation time
-    setTimeout(() => {
-      setIsGenerating(false);
-      setShowDeck(true);
-    }, 1500);
+    setShowDeck(true);
   };
 
   const handleNewScenario = () => {
@@ -133,24 +127,15 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
                     <div className="flex items-center gap-3">
                       <button 
                         onClick={handleGenerate}
-                        disabled={!scenario.trim() || isGenerating}
+                        disabled={!scenario.trim()}
                         className={`px-8 py-3.5 rounded-2xl font-body font-semibold text-sm transition-all flex items-center gap-3 active:scale-95 shadow-lg ${
-                          scenario.trim() && !isGenerating 
+                          scenario.trim()
                           ? 'bg-[#efa339] text-black shadow-[#efa339]/20 hover:shadow-[#efa339]/40 hover:-translate-y-0.5' 
                           : 'bg-white/5 text-white/20 border border-white/10 cursor-not-allowed'
                         }`}
                       >
-                        {isGenerating ? (
-                          <>
-                            <RefreshCcw size={18} className="animate-spin" />
-                            Thinking...
-                          </>
-                        ) : (
-                          <>
-                            Generate Deck
-                            <ArrowUp size={18} className="rotate-90" />
-                          </>
-                        )}
+                        Generate Deck
+                        <ArrowUp size={18} className="rotate-90" />
                       </button>
                     </div>
                   </div>
@@ -210,4 +195,3 @@ const JourneyScreen: React.FC<JourneyScreenProps> = ({ onGoToDashboard }) => {
 };
 
 export default JourneyScreen;
-
