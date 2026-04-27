@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 
 interface AuthProps {
   onClose: () => void;
+  onGuestLogin?: () => void;
 }
 
-export default function Auth({ onClose }: AuthProps) {
+export default function Auth({ onClose, onGuestLogin }: AuthProps) {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,6 +43,15 @@ export default function Auth({ onClose }: AuthProps) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGuestLogin = () => {
+    // Bypass Supabase auth and push the user to the destination screen
+    console.log('Continue as a guest clicked');
+    if (onGuestLogin) {
+      onGuestLogin();
+    }
+    onClose();
   };
 
   return (
@@ -124,6 +134,14 @@ export default function Auth({ onClose }: AuthProps) {
             {loading ? 'Loading...' : (view === 'sign-up' ? 'Sign Up' : view === 'forgot-password' ? 'Send Reset Link' : 'Sign In')}
           </button>
         </form>
+
+        <button
+          type="button"
+          onClick={handleGuestLogin}
+          className="w-full mt-4 bg-transparent border border-white/10 text-gray-300 font-medium rounded-lg px-4 py-3 hover:text-white hover:border-white/20 transition-colors"
+        >
+          Continue as a guest
+        </button>
 
         <div className="mt-6 text-center">
           {view === 'sign-in' ? (

@@ -112,7 +112,13 @@ const App: React.FC = () => {
       </main>
 
       {isAuthModalOpen && (
-        <Auth onClose={() => setIsAuthModalOpen(false)} />
+        <Auth 
+          onClose={() => setIsAuthModalOpen(false)} 
+          onGuestLogin={() => {
+            setView('dashboard');
+            setIsAuthModalOpen(false);
+          }}
+        />
       )}
     </div>
   );
