@@ -35,13 +35,19 @@ The landing page sets the tone—minimalist, bold, and focused on the transition
   <img src="public/screenshots/hero-section.png" width="900" style="border-radius: 10px;" alt="Hero Screen">
 </p>
 
-### 02. Defining the Scenario
+### 02. Seamless Authentication
+Secure and distraction-free entry point. The login flow is designed to be as calm as the app experience itself.
+<p align="center">
+  <img src="public/screenshots/auth-flow.png" width="900" style="border-radius: 10px;" alt="Authentication Flow">
+</p>
+
+### 03. Defining the Scenario
 Nudge uses AI-driven scenarios to provide context-aware suggestions. Whether you're at a tech event or a park, the app adapts to you.
 <p align="center">
   <img src="public/screenshots/start-section.png" width="900" style="border-radius: 10px;" alt="Scenario Selection">
 </p>
 
-### 03. The Action Deck
+### 04. The Action Deck
 Custom-generated cards provide clear, actionable "nudges" to help you break out of your routine.
 <p align="center">
   <img src="public/screenshots/card-section.png" width="440" style="border-radius: 10px;" alt="Card Deck">
@@ -49,7 +55,7 @@ Custom-generated cards provide clear, actionable "nudges" to help you break out 
 </p>
 <p align="center"><i>From discovery to decision—every interaction is designed to be frictionless.</i></p>
 
-### 04. Mastering Consistency
+### 05. Mastering Consistency
 The dashboard provides a "Real-Time Insight" into your behavioral patterns, celebrating streaks and completed loops.
 <p align="center">
   <img src="public/screenshots/dashboard-section.png" width="900" style="border-radius: 10px;" alt="Dashboard Experience">
