@@ -1,23 +1,25 @@
-# Nudge 2.0
+# Nudge
 
-## What problem it solves
-Nudge 2.0 is designed to help users build better habits and break bad ones through a gentle, interactive, and visually engaging experience. It makes behavioral changes feel less like a chore and more like a rewarding journey.
+> Stop Scrolling, Start Living. A premium habit-tracking experience designed to build positive behavioral momentum.
+
+## The Problem
+Most habit trackers are either overly complex, visually rigid, or feel like a chore. Behavioral change shouldn't be punitive. Nudge was built to explore how thoughtful interactions, psychological rewards, and a premium minimal UI can encourage users to actually stick to their goals.
 
 ## Features
-- **Interactive Habit Cards:** Swipeable and engaging UI for interacting with your daily goals.
-- **Progress Tracking:** A dashboard that provides visual feedback on your outcomes.
-- **Secure Authentication:** User data is securely managed through Supabase.
-- **Modern, Responsive UI:** Built for both mobile and desktop experiences.
+- **Interactive Habit Cards:** Swipeable, tactile UI for engaging with daily goals effortlessly.
+- **Progress Tracking:** A sleek dashboard providing visual feedback on your behavioral outcomes.
+- **Secure Authentication:** Premium, seamless login flow powered by Supabase.
+- **Modern, Responsive Design:** Carefully crafted for both mobile and desktop, ensuring a seamless experience anywhere.
 
 ## Tech Stack
 - **Frontend:** React, TypeScript, Vite
-- **Styling:** Tailwind CSS
+- **Styling:** Tailwind CSS, Framer Motion
 - **Backend/Database:** Supabase
 - **Hosting/Deployment:** (Coming soon)
 
-## Setup Steps
+## Setup & Local Development
 
-Follow these steps to run Nudge 2.0 locally:
+Follow these steps to run Nudge locally:
 
 1. **Clone the repository:**
    ```bash
@@ -35,7 +37,7 @@ Follow these steps to run Nudge 2.0 locally:
      ```bash
      cp .env.example .env
      ```
-   - Open `.env` and fill in your actual Supabase credentials:
+   - Open `.env` and fill in your Supabase credentials:
      ```env
      VITE_SUPABASE_URL=your_supabase_project_url_here
      VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here
@@ -47,10 +49,10 @@ Follow these steps to run Nudge 2.0 locally:
    ```
 
 ## Screenshots
-*(Placeholder for screenshots of the Dashboard, Swipeable Cards, and Journey Screen)*
+*(Placeholder for high-fidelity screenshots of the Dashboard, Swipeable Cards, and Journey Screen)*
 
 ## Live Demo
 *(Placeholder for live demo link)*
 
-## Why I built it
-As a designer, I wanted to create a habit-tracking experience that prioritizes user psychology and aesthetics. Most habit trackers are overly complex or visually rigid. Nudge 2.0 was built to explore how thoughtful interactions and minimal UI can encourage positive behavioral momentum.
+## Why I Built It
+As a product designer, I wanted to create a tool that prioritizes user psychology and aesthetics above all else. Nudge is the intersection of premium design thinking and functional engineering—a proof of concept that habit tracking can be beautiful.

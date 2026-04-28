@@ -49,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeItem = 'Home', onNavigate, isAuth
             <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-500 group-hover:opacity-20" />
           </div>
           <span className="font-heading text-2xl tracking-tighter text-white">
-            Nudge <span className="italic text-[#efa339]">2.0</span>
+            Nudge
           </span>
         </div>
 
